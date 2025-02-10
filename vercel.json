@@ -1,8 +1,8 @@
 {
     "crons": [
       {
-        "path": "/api/sync-data/average?method=post",
-        "schedule": "47 23 * * *"
+        "path": "/api/sync-data/average",
+        "schedule": "50 23 * * *"
       }
     ]
 }
