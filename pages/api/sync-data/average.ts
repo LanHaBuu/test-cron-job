@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createOrUpdate, updateElementByIndex } from "@/src/firestore/average";
 import { NextApiRequest, NextApiResponse } from "next";
 

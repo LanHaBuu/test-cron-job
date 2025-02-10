@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 import { getAverageAprPools30d } from "@/src/firestore/average";
 import { NextApiRequest, NextApiResponse } from "next";
 

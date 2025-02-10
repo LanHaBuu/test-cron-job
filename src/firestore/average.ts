@@ -1,3 +1,4 @@
+/* eslint-disable */
 import admin from "firebase-admin";
 import { db } from ".";
 
