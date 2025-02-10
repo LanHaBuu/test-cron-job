@@ -2,7 +2,7 @@
     "crons": [
       {
         "path": "/api/sync-data/average?method=post",
-        "schedule": "40 17 * * *"
+        "schedule": "40 23 * * *"
       }
     ]
 }
