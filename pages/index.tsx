@@ -10,7 +10,7 @@ export default function Home() {
 
     setData(res.data);
   };
-
+ 
   useEffect(() => {
     fetchData();
   }, []);
