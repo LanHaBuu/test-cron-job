@@ -6,7 +6,7 @@ export default function Home() {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    const res = await axios.get("https://test-cron-job-mu.vercel.app//api/cron-average");
+    const res = await axios.get("https://test-cron-job-mu.vercel.app/api/cron-average");
 
     setData(res.data);
   };
