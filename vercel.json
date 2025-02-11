@@ -1,8 +1,9 @@
 {
-    "crons": [
-      {
-        "path": "/api/sync-data/average",
-        "schedule": "10 02 * * *"
-      }
-    ]
+  "crons": [
+    {
+      "path": "/api/sync-data/average",
+      "schedule": "45 02 * * *",
+      "method": "POST"
+    }
+  ]
 }
