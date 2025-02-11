@@ -1,40 +1,27 @@
 /* eslint-disable */
 import { createOrUpdate, updateElementByIndex } from "@/src/firestore/average";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest } from "next/server";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
-  if (req.method === "POST") {
-    const apiKey = req.body.apiKey;
 
-    // if (!apiKey) {
-    //   return res.status(400).send({});
-    // }
+  const secret = req.query.secret;
 
-    try {
-      const result = await createOrUpdate();
-      return res.status(200).send(result);
-    } catch (error) {
-      return res.status(400).send({});
-    }
+  if (secret !== process.env.CRON_SECRET) {
+
+    
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
-  if (req.method === "PATCH") {
-    const apiKey = req.body.apiKey;
-    const index = req.body.index;
-
-    if (!apiKey) {
-      return res.status(400).send({});
-    }
-    try {
-      const result = await updateElementByIndex(index);
-      return res.status(200).send(result);
-    } catch (error) {
-      return res.status(400).send({});
-    }
+  try {
+    const result = await createOrUpdate();
+    return res.status(200).send(result);
+  } catch (error) {
+    return res.status(400).send({});
   }
-
-  return res.status(400).send({});
+  
 }
+
