@@ -12,7 +12,7 @@ export default async function handler(
 
   if (secret !== process.env.CRON_SECRET) {
 
-    
+     
     return res.status(401).json({ message: "Unauthorized" });
   }
 
