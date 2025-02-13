@@ -1,35 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const allowedOrigins = ['https://test-cron-job-mu.vercel.app']
+const allowedReferers = ['https://test-cron-job-mu.vercel.app', 'http://localhost:3000']
 
 const corsOptions = {
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 }
 
 export function middleware(request: NextRequest) {
-  const origin = request.headers.get('origin') ?? ''
   const referer = request.headers.get('referer') ?? ''
-  const isAllowedOrigin = allowedOrigins.includes(origin) || referer.startsWith(allowedOrigins[0])
 
-  // Handle preflighted requests
+  // Check if referer is allowed
+  const isAllowedReferer = allowedReferers.some((allowed) => referer.startsWith(allowed))
+
+  console.log('Referer:', referer)
+  console.log('Allowed:', isAllowedReferer)
+
+  // Handle preflight CORS requests (OPTIONS)
   if (request.method === 'OPTIONS') {
-    const preflightHeaders = {
-      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
-      ...corsOptions,
-    }
-    return NextResponse.json({}, { headers: preflightHeaders })
+    return new Response(null, { headers: corsOptions }) // ✅ Fixed: Use `new Response()`
   }
 
   // Block unauthorized requests
-  if (!isAllowedOrigin) {
-    return NextResponse.json({ message: 'Access denied: Invalid origin' }, { status: 403 })
+  if (!isAllowedReferer) {
+    return new Response(JSON.stringify({ message: 'Access denied: Invalid referer' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    }) // ✅ Fixed: Use `new Response()`
   }
 
   // Allow request
   const response = NextResponse.next()
-  response.headers.set('Access-Control-Allow-Origin', origin)
 
+  // Apply CORS headers
   Object.entries(corsOptions).forEach(([key, value]) => {
     response.headers.set(key, value)
   })
