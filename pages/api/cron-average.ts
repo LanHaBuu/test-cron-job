@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const allowedOrigin = "https://test-cron-job-mu.vercel.app";
+  const allowedOrigin = "https://test-cron-job-mu.vercel.app/api";
   const origin = req.headers.origin;
 
   // Allow CORS for browser requests
