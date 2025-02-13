@@ -3,10 +3,10 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
     const allowedOrigin = "https://test-cron-job-mu.vercel.app";
-    const origin = req.headers.get("origin") || req.headers.get("referer");
+    const origin = req.headers.get("origin");
 
-    // Allow only requests from your website
-    if (!origin || !origin.startsWith(allowedOrigin)) {
+    // If no origin header is present, reject the request
+    if (!origin || origin !== allowedOrigin) {
         return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
