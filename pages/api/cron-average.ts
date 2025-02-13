@@ -1,9 +1,9 @@
 
 import { getAverageAprPools30d } from "@/src/firestore/average";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 
 export default async function handler(
-  req: NextApiRequest,
+  // req: NextApiRequest,
   res: NextApiResponse
 ) {
 
@@ -12,7 +12,9 @@ export default async function handler(
     const data = await getAverageAprPools30d();
     res.setHeader("Cache-Control", "max-age=300");
     return res.status(200).send(data);
-  } catch (error) {
+  } catch (err) {
+    console.log('err',err);
+    
     return res.status(400).send({});
   }
 }
