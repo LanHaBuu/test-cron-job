@@ -11,5 +11,6 @@ module.exports = {
         ]
       }
     ];
-  }
+  },
+  middleware: true,
 };
