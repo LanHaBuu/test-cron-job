@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const allowedReferers = ['https://test-cron-job-mu.vercel.app', 'http://localhost:3000']
+const allowedReferers = ['http://localhost:3000']
 
 const corsOptions = {
   'Access-Control-Allow-Origin': '*',
