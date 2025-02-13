@@ -1,22 +1,19 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function middleware() {
-    // retrieve the current response
-    const res = NextResponse.next()
+export function middleware(req: NextRequest) {
+    const allowedOrigin = "https://test-cron-job-mu.vercel.app";
+    const origin = req.headers.get("origin") || req.headers.get("referer");
 
-    // add the CORS headers to the response
-    res.headers.append('Access-Control-Allow-Credentials', "true")
-    res.headers.append('Access-Control-Allow-Origin', 'https://test-cron-job-mu.vercel.app') 
-    res.headers.append('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')
-    res.headers.append(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
+    // Allow only requests from your website
+    if (!origin || !origin.startsWith(allowedOrigin)) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
 
-    return res
+    return NextResponse.next();
 }
 
-// specify the path regex to apply the middleware to
+// Apply middleware only to the API route
 export const config = {
-    matcher: '/api/:path*',
-}
+    matcher: "/api/cron-average",
+};

@@ -1,18 +1,12 @@
 {
-  "crons": [
+  "headers": [
     {
-      "path": "/api/sync-data/average?secret=555555",
-      "schedule": "30 04 * * *"
-    }
-  ],
- "headers": [
-    {
-      "source": "/api/(.*)",
+      "source": "/api/cron-average",
       "headers": [
-        { "key": "Access-Control-Allow-Credentials", "value": "true" },
-        { "key": "Access-Control-Allow-Origin", "value": "https://test-cron-job-mu.vercel.app" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization" }
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://test-cron-job-mu.vercel.app"
+        }
       ]
     }
   ]
