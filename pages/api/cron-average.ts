@@ -6,27 +6,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const allowedOrigins = [
-    "https://test-cron-job-mu.vercel.app",
-    "https://www.test-cron-job-mu.vercel.app",
-  ];
-  const origin = req.headers.origin;
+  const referer = req.headers.referer;
+  const allowedOrigin = "https://test-cron-job-mu.vercel.app";
 
-  console.log("Request Origin:", origin);
-
-  if (!origin || !allowedOrigins.includes(origin)) {
-    console.log("Blocked request from origin:", origin);
+  // Allow request if:
+  // - `origin` matches allowedOrigin
+  // - OR `referer` starts with allowedOrigin
+  if (
+    (!referer || !referer.startsWith(allowedOrigin))
+  ) {
     return res.status(403).json({ message: "Access denied: Invalid origin" });
   }
-
-  res.setHeader("Access-Control-Allow-Origin", origin);
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
   try {
     const data = await getAverageAprPools30d();
     return res.status(200).json(data);
