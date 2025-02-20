@@ -8,13 +8,6 @@ export default async function handler(
   res: NextApiResponse,
 ) {
 
-  const secret = req.query.secret;
-
-  if (secret !== process.env.CRON_SECRET) {
-
-     
-    return res.status(401).json({ message: "Unauthorized" });
-  }
 
   try {
     const result = await createOrUpdate();
